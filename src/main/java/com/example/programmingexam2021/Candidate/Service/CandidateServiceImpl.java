@@ -54,10 +54,22 @@ public class CandidateServiceImpl implements CandidateService {
         Party party = partyRepo.findById(request.getParty_id())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "PARTY NOT FOUND"));
 
+        if (request.getId() == null && candidateRepo.existsById(request.getId()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         Candidate candidate = modelMapper.map(request, Candidate.class);
         candidate.setParty(party);
 
         return CandidateResponse.mapCandidateToResponseDTO(candidateRepo.save(candidate));
+    }
+
+    @Override
+    public void addVote(Long id) {
+        Candidate candidate = candidateRepo.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NOT FOUND"));
+
+        candidate.incrementVotes();
+        candidateRepo.save(candidate);
     }
 
     @Override

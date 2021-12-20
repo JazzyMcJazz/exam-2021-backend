@@ -11,5 +11,5 @@ public class CandidateRequest {
 
     private Long id;
     private String name;
-    private char party_id;
+    private Character party_id;
 }

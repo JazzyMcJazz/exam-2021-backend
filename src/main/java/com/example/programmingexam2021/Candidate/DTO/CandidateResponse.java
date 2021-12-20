@@ -15,6 +15,7 @@ public class CandidateResponse {
 
     private Long id;
     private String name;
+    private Integer votes;
     private PartyDTO party;
 
     public static CandidateResponse mapCandidateToResponseDTO(Candidate candidate) {

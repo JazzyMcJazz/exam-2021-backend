@@ -72,9 +72,10 @@ class CandidateControllerTest {
         response = edit(request);
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 
-        request.setParty_id('A');
+        request.setParty_id('O');
         response = edit(request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals('O', response.getBody().getParty().getId());
     }
 
     @Test
@@ -116,12 +117,11 @@ class CandidateControllerTest {
     }
 
     private ResponseEntity<?> delete(Long id) {
-        HttpEntity<?> entity = new HttpEntity<>(id, null);
 
         return restTemplate.exchange(
-                createUrl(PATH),
+                createUrl(PATH+id),
                 HttpMethod.DELETE,
-                entity,
+                null,
                 getClass());
     }
 

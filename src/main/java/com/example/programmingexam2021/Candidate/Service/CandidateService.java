@@ -11,5 +11,7 @@ public interface CandidateService {
     List<CandidateResponse> findAll();
     CandidateResponse addCandidate(CandidateRequest request);
     CandidateResponse editCandidate(CandidateRequest request);
+    void addVote(Long id);
     void deleteCandidate(Long id);
+
 }

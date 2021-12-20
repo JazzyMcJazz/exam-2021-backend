@@ -53,8 +53,18 @@ public class CandidateController {
         );
     }
 
-    @DeleteMapping
-    private ResponseEntity<?> deleteCandidate(@RequestBody Long id) {
+    @PutMapping(path = "/vote/{id}")
+    private ResponseEntity<?> voteForCandidate(@PathVariable Long id) {
+        candidateService.addVote(id);
+
+        return new ResponseEntity<>(
+                null,
+                HttpStatus.OK
+        );
+    }
+
+    @DeleteMapping(path = "/{id}")
+    private ResponseEntity<?> deleteCandidate(@PathVariable Long id) {
         candidateService.deleteCandidate(id);
 
         return new ResponseEntity<>(

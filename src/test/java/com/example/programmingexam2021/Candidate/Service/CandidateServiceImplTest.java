@@ -48,7 +48,7 @@ class CandidateServiceImplTest {
 
         request.setParty_id('A');
         assertEquals(105, candidateService.addCandidate(request).getId());
-        assertEquals(5, candidateService.findAllByPartyId('A').size());
+        assertEquals(4, candidateService.findAllByPartyId('A').size());
         assertEquals(5, candidateService.findAll().size());
     }
 
@@ -57,17 +57,18 @@ class CandidateServiceImplTest {
     void editCandidate() {
         CandidateRequest request1 = new CandidateRequest(null, "Bob Jørgensen", 'E');
 
-        assertThrows(ResponseStatusException.class, () -> candidateService.addCandidate(request1));
+        assertThrows(ResponseStatusException.class, () -> candidateService.editCandidate(request1));
 
         request1.setParty_id('A');
-        assertEquals(105, candidateService.editCandidate(request1).getId());
-        assertEquals(4, candidateService.findAllByPartyId('A').size());
-        assertEquals(5, candidateService.findAll().size());
+        request1.setId(101L);
+        assertEquals(101, candidateService.editCandidate(request1).getId());
+        assertEquals(3, candidateService.findAllByPartyId('A').size());
+        assertEquals(4, candidateService.findAll().size());
 
-        CandidateRequest request2 = new CandidateRequest(105L, "Bo Jørgensen", 'O');
-        assertEquals(105, candidateService.editCandidate(request2).getId());
+        CandidateRequest request2 = new CandidateRequest(101L, "Bo Jørgensen", 'O');
+        assertEquals(101, candidateService.editCandidate(request2).getId());
         assertEquals(2, candidateService.findAllByPartyId('O').size());
-        assertEquals(5, candidateService.findAll().size());
+        assertEquals(4, candidateService.findAll().size());
     }
 
     @Test
